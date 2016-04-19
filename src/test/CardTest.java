@@ -31,7 +31,7 @@ public class CardTest {
         System.out.println("Turn: \n" + Tavolo.turn(cardMazzo));
         r.read();
         System.out.println("River: \n" + Tavolo.river(cardMazzo));
-        
+        System.out.println(cardMazzo.toString());
         
        
         
