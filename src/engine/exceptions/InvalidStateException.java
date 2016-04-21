@@ -3,7 +3,7 @@ package engine.exceptions;
 
 /**
  *
- * @author Mattia
+ * @author Mattia Tanzini
  */
 public class InvalidStateException extends Exception {
 
