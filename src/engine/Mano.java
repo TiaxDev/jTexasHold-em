@@ -52,5 +52,10 @@ public class Mano {
         return 0;
     }
     
+    public int valore(ArrayList<Carta> sulTavolo){
+        /*Da implementare*/
+        return 0;
+    }
+    
     
 }

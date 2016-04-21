@@ -28,7 +28,9 @@ public class Tavolo {
         ArrayList<Carta> c = new ArrayList<>(nOfCards);
         for(int i = 0; i < nOfCards; i++){
             try{
-                c.add(m.pescaCarta());
+                m.pescaCarta(); //Carta bruciata
+                c.add(m.pescaCarta()); //Carta messa sul tavolo
+                
                 SUL_TAVOLO++;
             }catch (Exception ex){
                 System.err.println(ex.getMessage());
