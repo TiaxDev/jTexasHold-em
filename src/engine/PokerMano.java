@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  *
  * @author Mattia Tanzini
+ * Classe test per pokerloop
  */
 public class PokerMano {
     
