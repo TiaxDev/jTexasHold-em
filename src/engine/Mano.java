@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Mano {
     
-    public final int NUMCARTE = 2;
+    public final int NUMCARTE = 5;
     
     private ArrayList<Carta> c;
 
@@ -36,6 +36,10 @@ public class Mano {
     
     public void setCarta(int index, Carta c){
         this.c.set(index, c);
+    }
+    
+    public void addCarta(int index, Carta c){
+        this.c.add(c);
     }
     
     @Override
