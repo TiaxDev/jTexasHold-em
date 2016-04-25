@@ -10,14 +10,14 @@ import java.util.ArrayList;
  *
  * @author Mattia Tanzini
  */
-public class SocketListener implements Runnable {
+public class ServerSocketListener implements Runnable {
     
     private static final int MAX_CLIENTS = 5;
     private static final int LISTEN_PORT = 8484;
     private static final int LISTEN_TIMEOUT = 20000;
 
     private ServerSocket server;
-    private ArrayList<ClientWorker> clients;
+    private ArrayList<ClientHandler> clients;
     
     private void init(){
         try {
@@ -43,12 +43,12 @@ public class SocketListener implements Runnable {
         
         while(!end || nClients == MAX_CLIENTS){
             try {
-                clients.add(new ClientWorker(server.accept()));
+                clients.add(new ClientHandler(server.accept()));
                 Thread t = new Thread(clients.get(nClients));
                 t.start();
                 nClients++;
                 System.err.println("-Actual Clients connected: ");
-                for(ClientWorker c : clients){
+                for(ClientHandler c : clients){
                     System.out.println(c.toString());
                 }
             } catch (java.io.InterruptedIOException ex){
@@ -61,7 +61,7 @@ public class SocketListener implements Runnable {
         }
     }
     
-    public ClientWorker getWorker(int index){
+    public ClientHandler getWorker(int index){
         return clients.get(index);
     }
     

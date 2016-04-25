@@ -9,7 +9,7 @@ package test;
 import card.Mazzo;
 import engine.Player;
 import engine.multiplayer.ClientConnect;
-import engine.multiplayer.SocketListener;
+import engine.multiplayer.ServerSocketListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +25,7 @@ public class Form extends javax.swing.JFrame {
     Mazzo m;
     Player me;
     
-    SocketListener socket = new SocketListener();
+    ServerSocketListener socket = new ServerSocketListener();
     ClientConnect mec = new ClientConnect("localhost");
     
     public Form() {
@@ -223,7 +223,7 @@ public class Form extends javax.swing.JFrame {
     }//GEN-LAST:event_receiveActionPerformed
 
     private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
-        mec.write("CIAODALCLIENT");
+        mec.write("HiFromClient");
     }//GEN-LAST:event_sendActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

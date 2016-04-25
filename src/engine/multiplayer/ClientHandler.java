@@ -8,7 +8,7 @@ import java.net.Socket;
  *
  * @author Mattia Tanzini
  */
-public class ClientWorker implements Runnable {
+public class ClientHandler implements Runnable {
     
     private static final int EXEC_ERR = -1;
     
@@ -17,7 +17,7 @@ public class ClientWorker implements Runnable {
     private BufferedReader in = null;
     private PrintWriter out = null;
     
-    public ClientWorker(Socket client) {
+    public ClientHandler(Socket client) {
         this.client = client;
     }
     
