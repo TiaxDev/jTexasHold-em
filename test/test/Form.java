@@ -8,6 +8,10 @@ package test;
 
 import card.Mazzo;
 import engine.Player;
+import engine.multiplayer.ClientConnect;
+import engine.multiplayer.SocketListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -20,6 +24,9 @@ public class Form extends javax.swing.JFrame {
      */
     Mazzo m;
     Player me;
+    
+    SocketListener socket = new SocketListener();
+    ClientConnect mec = new ClientConnect("localhost");
     
     public Form() {
         initComponents();
@@ -45,18 +52,27 @@ public class Form extends javax.swing.JFrame {
         mano = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         table = new javax.swing.JTextArea();
+        serverStart = new javax.swing.JButton();
+        clientStart = new javax.swing.JButton();
+        receive = new javax.swing.JButton();
+        send = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("test");
         setMinimumSize(new java.awt.Dimension(800, 600));
 
         bFold.setText("Fold");
+        bFold.setEnabled(false);
 
         bBet.setText("Bet");
+        bBet.setEnabled(false);
 
         bRaise.setText("Raise");
+        bRaise.setEnabled(false);
 
         bCheck.setText("Check");
+        bCheck.setEnabled(false);
 
         mano.setEditable(false);
         mano.setBackground(new java.awt.Color(204, 204, 204));
@@ -69,31 +85,92 @@ public class Form extends javax.swing.JFrame {
         table.setRows(5);
         jScrollPane2.setViewportView(table);
 
+        serverStart.setText("StartServer");
+        serverStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serverStartActionPerformed(evt);
+            }
+        });
+
+        clientStart.setText("StartClient");
+        clientStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientStartActionPerformed(evt);
+            }
+        });
+
+        receive.setText("receive");
+        receive.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                receiveActionPerformed(evt);
+            }
+        });
+
+        send.setText("send");
+        send.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("UpdateClientsList");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
         panel.setLayout(panelLayout);
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(bFold, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(bBet, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(bFold, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(bBet, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(bRaise, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40)
+                                .addComponent(bCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jScrollPane2))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(receive)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(send))
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(serverStart)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(clientStart)))
+                        .addGap(35, 35, 35))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addComponent(bRaise, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(bCheck, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane2))
-                .addContainerGap())
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelLayout.createSequentialGroup()
-                .addContainerGap(127, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serverStart)
+                    .addComponent(clientStart))
+                .addGap(18, 18, 18)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(receive)
+                    .addComponent(send))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1)
                     .addComponent(jScrollPane2))
@@ -119,6 +196,39 @@ public class Form extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void serverStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serverStartActionPerformed
+        Thread t;
+        
+        t = new Thread(socket);
+        t.start();
+        System.out.println(socket.getClientsConnected());
+        System.out.println("from server: Main thread ok");
+        
+    }//GEN-LAST:event_serverStartActionPerformed
+
+    private void clientStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientStartActionPerformed
+        Thread t;
+        t = new Thread(mec);
+        t.start();
+        
+        System.out.println("from client: Main thread ok");
+        
+    }//GEN-LAST:event_clientStartActionPerformed
+
+    private void receiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_receiveActionPerformed
+        if(socket.getClientsConnected()>0){
+            System.out.println(socket.getWorker(0).read());
+        }
+    }//GEN-LAST:event_receiveActionPerformed
+
+    private void sendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendActionPerformed
+        mec.write("CIAODALCLIENT");
+    }//GEN-LAST:event_sendActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.mano.setText("Clients connected: \n" + socket.getClientsConnected());
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -161,10 +271,15 @@ public class Form extends javax.swing.JFrame {
     private javax.swing.JButton bCheck;
     private javax.swing.JButton bFold;
     private javax.swing.JButton bRaise;
+    private javax.swing.JButton clientStart;
+    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea mano;
     private javax.swing.JPanel panel;
+    private javax.swing.JButton receive;
+    private javax.swing.JButton send;
+    private javax.swing.JButton serverStart;
     private javax.swing.JTextArea table;
     // End of variables declaration//GEN-END:variables
 }
