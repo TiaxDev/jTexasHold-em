@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -45,6 +47,18 @@ public class ClientConnect implements Runnable {
         }
     }
     
+    public void closeConnection(){
+        try {
+            in.close();
+            out.print(Network.END_OF_COMMUNICATION);
+            out.flush();
+            out.close();
+            server.close();
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    
     public String read(){
         String fromServer = null;
         
@@ -70,4 +84,13 @@ public class ClientConnect implements Runnable {
         return server.toString();
     }
     
+    @Override
+    protected void finalize(){
+        closeConnection();
+        try {
+            super.finalize();
+        } catch (Throwable ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
 }

@@ -3,14 +3,14 @@ package engine.multiplayer;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Mattia Tanzini
  */
 public class ClientHandler implements Runnable {
-    
-    private static final int EXEC_ERR = -1;
     
     private Socket client;
     
@@ -28,6 +28,18 @@ public class ClientHandler implements Runnable {
             out = new PrintWriter(client.getOutputStream(), true);
             out.flush();
             in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+    }
+    
+    public void closeConnection(){
+        try {
+            in.close();
+            out.print(Network.END_OF_COMMUNICATION);
+            out.flush();
+            out.close();
+            client.close();
         } catch (IOException ex) {
             System.err.println(ex.getMessage());
         }
@@ -59,13 +71,11 @@ public class ClientHandler implements Runnable {
     
     @Override
     protected void finalize(){
+        closeConnection();
         try {
-            in.close();
-            out.close();
-            client.close();
-        } catch (IOException ex) {
+            super.finalize();
+        } catch (Throwable ex) {
             System.err.println(ex.getMessage());
-            System.exit(EXEC_ERR);
         }
     }
     
