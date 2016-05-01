@@ -3,8 +3,6 @@ package engine.multiplayer;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -13,6 +11,7 @@ import java.util.logging.Logger;
 public class ClientHandler implements Runnable {
     
     private Socket client;
+    private String hostName;
     
     private BufferedReader in = null;
     private PrintWriter out = null;

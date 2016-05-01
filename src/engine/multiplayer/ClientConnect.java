@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -16,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class ClientConnect implements Runnable {
     
-    private static final int CONNECT_PORT = 8484;
+    private static final int CONNECT_PORT = 8880;
     
     private String host;
     private int port;
@@ -37,8 +35,8 @@ public class ClientConnect implements Runnable {
     public void run() {
         try {
             //Creates socket connection
+            System.out.println("Attempting to connect...");
             server = new Socket(host, port);
-            
             out = new PrintWriter(server.getOutputStream(), true);
             out.flush();
             in = new BufferedReader(new InputStreamReader(server.getInputStream()));

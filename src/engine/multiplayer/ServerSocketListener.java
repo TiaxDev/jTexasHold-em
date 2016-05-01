@@ -13,8 +13,8 @@ import java.util.ArrayList;
 public class ServerSocketListener implements Runnable {
     
     private static final int MAX_CLIENTS = 5;
-    private static final int LISTEN_PORT = 8484;
-    private static final int LISTEN_TIMEOUT = 20000;
+    private static final int LISTEN_PORT = 8880;
+    private static final int LISTEN_TIMEOUT = 60000;
 
     private ServerSocket server;
     private ArrayList<ClientHandler> clients;
